@@ -1,0 +1,242 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none; /* Evita seleção de texto em cliques rápidos */
+}
+
+body {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at top, #1a2a1f, #0a0f0a);
+    font-family: 'Cinema', 'Georgia', 'Times New Roman', serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Efeito de poeira mágica */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.15"><circle cx="400" cy="400" r="1.5" fill="%23ffd966"/><circle cx="120" cy="320" r="1" fill="%23e6b800"/><circle cx="680" cy="500" r="1.2" fill="%23ffcc33"/><circle cx="450" cy="150" r="1" fill="%23ffdd77"/><circle cx="300" cy="700" r="1.8" fill="%23ffcc44"/></svg>');
+    background-repeat: repeat;
+    pointer-events: none;
+    animation: sparkle 8s linear infinite;
+}
+
+@keyframes sparkle {
+    0% { background-position: 0 0; }
+    100% { background-position: 100px 100px; }
+}
+
+/* Container principal com efeito pergaminho */
+.container {
+    max-width: 800px;
+    width: 100%;
+    background: rgba(30, 24, 18, 0.85);
+    backdrop-filter: blur(3px);
+    border-radius: 40px 20px 40px 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,200,0.2);
+    border: 1px solid rgba(218, 165, 32, 0.6);
+    padding: 25px 20px 35px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+/* Cabeçalho com brasão estilizado */
+.hogwarts-header {
+    text-align: center;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #d4af37;
+    padding-bottom: 15px;
+}
+
+.hogwarts-header h1 {
+    font-size: 2rem;
+    letter-spacing: 3px;
+    color: #f5e7b2;
+    text-shadow: 0 0 5px #b8860b, 0 0 10px #5a3e1b;
+    font-family: 'Cinema', 'Georgia', serif;
+}
+
+.hogwarts-header p {
+    color: #ecd67a;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* Card de tempo */
+.timer-card {
+    background: #1e1a10;
+    border-radius: 50px;
+    padding: 12px 20px;
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+    border: 1px solid #b8860b;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.timer-label {
+    font-family: monospace;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffd966;
+    letter-spacing: 2px;
+}
+
+.timer-digits {
+    font-family: 'Courier New', monospace;
+    font-size: 2rem;
+    font-weight: bold;
+    background: #00000066;
+    padding: 5px 15px;
+    border-radius: 40px;
+    color: #ffd966;
+    text-shadow: 0 0 4px #ff9900;
+}
+
+/* área da história e pergunta */
+.story-area {
+    background: #2c2419cc;
+    border-radius: 30px;
+    padding: 25px;
+    margin: 15px 0;
+    border-left: 8px solid #d4af37;
+    backdrop-filter: blur(4px);
+}
+
+.question {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #ffeaac;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 0 #3a2a1a;
+}
+
+.description {
+    color: #f0e6c5;
+    line-height: 1.5;
+    font-size: 1.05rem;
+}
+
+/* Opções de escolha */
+.choices {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 30px 0 20px;
+}
+
+.choice-btn {
+    background: linear-gradient(135deg, #2e2a22, #201c14);
+    border: 1px solid #c9aa3f;
+    border-radius: 60px;
+    padding: 16px 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffefb9;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-family: 'Georgia', serif;
+    box-shadow: 0 5px 0 #0a0500;
+}
+
+.choice-btn:hover {
+    background: linear-gradient(135deg, #4a3e2c, #2f281b);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 #0a0500;
+    border-color: #e7c158;
+}
+
+.choice-prefix {
+    background: #d4af37;
+    color: #1e1a10;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+/* Fim do jogo e botão reiniciar */
+.end-message {
+    text-align: center;
+    background: #1e291bdd;
+    border-radius: 40px;
+    padding: 30px;
+    margin-top: 20px;
+    border: 2px solid #ffd966;
+}
+
+.end-message h2 {
+    color: #ffd966;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.end-message p {
+    color: #f5e2b2;
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+
+.restart-btn {
+    background: #c9aa3f;
+    border: none;
+    padding: 12px 32px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.2s;
+    color: #1f2a0e;
+    font-family: monospace;
+    box-shadow: 0 3px 6px black;
+}
+
+.restart-btn:hover {
+    background: #e6bf4b;
+    transform: scale(1.02);
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.7rem;
+    color: #b89a40;
+}
+
+@media (max-width: 550px) {
+    .container {
+        padding: 15px;
+    }
+    .question {
+        font-size: 1.3rem;
+    }
+    .timer-digits {
+        font-size: 1.4rem;
+    }
+    .choice-btn {
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+}
