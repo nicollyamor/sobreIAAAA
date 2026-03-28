@@ -7,7 +7,7 @@
 
 body {
     min-height: 100vh;
-    background: radial-gradient(ellipse at top, #1a2a1f, #0a0f0a);
+    background: radial-gradient('7c7cc33c18bb53a073f374fa7ba99777.gif');
     font-family: 'Cinema', 'Georgia', 'Times New Roman', serif;
     display: flex;
     justify-content: center;
