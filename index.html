@@ -9,7 +9,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none;
+            user-select: none; /* Evita seleção de texto em cliques rápidos */
         }
 
         body {
@@ -32,7 +32,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f776174747061642d6d656469612d736572766963652f53746f7279496d6167652f35316a6b716e7835324b446455673d3d2d3935353132323237362e313634393665303133616366373262353334373937313137323932372e676966.gif');
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.15"><circle cx="400" cy="400" r="1.5" fill="%23ffd966"/><circle cx="120" cy="320" r="1" fill="%23e6b800"/><circle cx="680" cy="500" r="1.2" fill="%23ffcc33"/><circle cx="450" cy="150" r="1" fill="%23ffdd77"/><circle cx="300" cy="700" r="1.8" fill="%23ffcc44"/></svg>');
             background-repeat: repeat;
             pointer-events: none;
             animation: sparkle 8s linear infinite;
@@ -43,7 +43,7 @@
             100% { background-position: 100px 100px; }
         }
 
-        /* Container principal */
+        /* Container principal com efeito pergaminho */
         .container {
             max-width: 800px;
             width: 100%;
@@ -58,7 +58,7 @@
             z-index: 2;
         }
 
-        /* Cabeçalho */
+        /* Cabeçalho com brasão estilizado */
         .hogwarts-header {
             text-align: center;
             margin-bottom: 25px;
@@ -75,19 +75,15 @@
         }
 
         .hogwarts-header p {
-                   /* ========== ÁREA DO PERGAMINHO ========== */
-        .story-area {
-            background: #fdf0cf;
-            background-image: radial-gradient(circle at 25% 40%, rgba(180,130,80,0.1) 2%, transparent 2.5%);
-            border: 2px solid #b8956a;
-            border-radius: 30px 12px 30px 12px;
-            padding: 35px 30px;
-            margin: 15px 0;
-            box-shadow: 8px 8px 20px rgba(0,0,0,0.2), inset 0 1px 4px rgba(255,245,200,0.8);
-            font-family: 'Georgia', 'Times New Roman', serif;
-            color: #3b2a1f;
-            position: relative;
+            color: #ecd67a;
+            font-style: italic;
+            font-size: 0.9rem;
         }
+
+        /* Card de tempo */
+        .timer-card {
+            background: #1e1a10;
+            border-radius: 50px;
             padding: 12px 20px;
             margin: 20px 0;
             display: flex;
@@ -118,28 +114,27 @@
             text-shadow: 0 0 4px #ff9900;
         }
 
-        /* ========== ÁREA DO PERGAMINHO ========== */
+        /* área da história e pergunta */
         .story-area {
-            background: #f5e6d3;
-            border-radius: 15px;
+            background: #2c2419cc;
+            border-radius: 30px;
             padding: 25px;
             margin: 15px 0;
-            border: 2px solid #c9aa3f;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            border-left: 8px solid #d4af37;
+            backdrop-filter: blur(4px);
         }
 
         .question {
             font-size: 1.6rem;
             font-weight: bold;
-            color: #5a3a1a;
+            color: #ffeaac;
             margin-bottom: 15px;
-            border-left: 4px solid #b8860b;
-            padding-left: 15px;
+            text-shadow: 1px 1px 0 #3a2a1a;
         }
 
         .description {
-            color: #3a2a1a;
-            line-height: 1.6;
+            color: #f0e6c5;
+            line-height: 1.5;
             font-size: 1.05rem;
         }
 
@@ -152,13 +147,13 @@
         }
 
         .choice-btn {
-            background: linear-gradient(135deg, #f5efdf, #ede3ce);
-            border: 2px solid #c9aa3f;
+            background: linear-gradient(135deg, #2e2a22, #201c14);
+            border: 1px solid #c9aa3f;
             border-radius: 60px;
             padding: 16px 20px;
             font-size: 1.1rem;
             font-weight: bold;
-            color: #3a2a1a;
+            color: #ffefb9;
             text-align: left;
             cursor: pointer;
             transition: 0.2s;
@@ -166,19 +161,19 @@
             align-items: center;
             gap: 15px;
             font-family: 'Georgia', serif;
-            box-shadow: 0 5px 0 #b88b3a;
+            box-shadow: 0 5px 0 #0a0500;
         }
 
         .choice-btn:hover {
-            background: linear-gradient(135deg, #fff3e0, #f7e5cd);
+            background: linear-gradient(135deg, #4a3e2c, #2f281b);
             transform: translateY(-2px);
-            box-shadow: 0 7px 0 #b88b3a;
+            box-shadow: 0 7px 0 #0a0500;
             border-color: #e7c158;
         }
 
         .choice-prefix {
             background: #d4af37;
-            color: #2c2412;
+            color: #1e1a10;
             width: 40px;
             height: 40px;
             border-radius: 40px;
@@ -274,7 +269,9 @@
 
 <script>
     // ======================= ESTRUTURA DA AVENTURA HARRY POTTER =======================
+    // Cada cena tem: id, descrição, pergunta, opções (texto, próxima cena, efeito de tempo?), e se é final
     const scenes = {
+        // Cena inicial: recém-formado descobre pergaminho proibido
         start: {
             id: 'start',
             title: '📜 O Pergaminho Proibido',
@@ -431,13 +428,15 @@
 
     // Variáveis de estado
     let currentSceneId = 'start';
-    let remainingSeconds = 6 * 3600;
+    let remainingSeconds = 6 * 3600; // 6 horas em segundos
     let timerInterval = null;
     let gameActive = true;
 
+    // Elementos DOM
     const dynamicDiv = document.getElementById('dynamicContent');
     const timerDisplaySpan = document.getElementById('timerDisplay');
 
+    // Função para formatar tempo (HH:MM:SS)
     function formatTime(seconds) {
         const hrs = Math.floor(seconds / 3600);
         const mins = Math.floor((seconds % 3600) / 60);
@@ -449,6 +448,7 @@
         if (timerDisplaySpan) {
             timerDisplaySpan.innerText = formatTime(remainingSeconds);
         }
+        // Se tempo zerar e jogo ativo, game over (final ruim por tempo)
         if (remainingSeconds <= 0 && gameActive) {
             endGameByTime();
         }
@@ -485,6 +485,7 @@
         const scene = scenes[sceneId];
         if (!scene) return;
 
+        // Se a cena tem finalMessage própria e é final, usa ela
         let finalMsg = '';
         if (scene.isEnd && scene.finalMessage) {
             finalMsg = scene.finalMessage;
@@ -492,6 +493,7 @@
             finalMsg = "A história chegou ao fim. O destino da magia ancestral foi decidido.";
         }
 
+        // Se for final ou não tem opções
         if (scene.isEnd || scene.options.length === 0) {
             gameActive = false;
             if (timerInterval) clearInterval(timerInterval);
@@ -509,9 +511,10 @@
             return;
         }
 
+        // Monta cena normal com opções
         let optionsHtml = '';
         scene.options.forEach((opt, idx) => {
-            const prefixLetter = String.fromCharCode(65 + idx);
+            const prefixLetter = String.fromCharCode(65 + idx); // A, B, C...
             optionsHtml += `
                 <div class="choice-btn" data-next="${opt.nextScene}" data-time="${opt.timeEffect || 0}">
                     <span class="choice-prefix">${prefixLetter}</span>
@@ -531,6 +534,7 @@
         `;
         dynamicDiv.innerHTML = fullHtml;
 
+        // Adicionar eventos nos botões
         const btns = document.querySelectorAll('.choice-btn');
         btns.forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -541,6 +545,8 @@
                 if (gameActive && nextSceneId && scenes[nextSceneId]) {
                     currentSceneId = nextSceneId;
                     renderScene(currentSceneId);
+                } else if (gameActive && nextSceneId && !scenes[nextSceneId]) {
+                    console.warn('Cena não encontrada');
                 }
             });
         });
@@ -555,11 +561,15 @@
                 if (remainingSeconds === 0) {
                     endGameByTime();
                 }
+            } else if (!gameActive && timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
             }
         }, 1000);
     }
 
     function restartGame() {
+        // Reset global
         if (timerInterval) clearInterval(timerInterval);
         remainingSeconds = 6 * 3600;
         currentSceneId = 'start';
@@ -569,6 +579,7 @@
         startTimer();
     }
 
+    // Inicialização
     renderScene('start');
     startTimer();
 </script>
